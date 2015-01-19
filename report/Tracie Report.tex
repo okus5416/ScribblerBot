@@ -1,0 +1,285 @@
+% https://www.sharelatex.com/learn/Main_Page
+% http://en.wikibooks.org/wiki/TeX
+
+\documentclass[11pt, letterpaper]{article}
+% Compile with "lualatex"
+
+\usepackage{graphicx}	% Allow more modification to images
+\usepackage{pgfgantt}	% Correspond to the creation of Gantt Chart
+\usepackage{tocloft}	% Allow more modification to the Table of Content (toc) 
+\usepackage{fontspec}	% Font specification, duh!
+\usepackage{subfig}		% Figure stuff
+\usepackage{multirow}	% Allow multi-row in tables
+\usepackage{enumitem}	% Allow custimization of lists
+\usepackage{setspace}	% Name says it all
+\usepackage{hyperref}	% Hyperlink referencing
+\usepackage{url}		% Improve the default url feature of LaTeX (fixes problem like line breaking)
+
+\setmainfont{Calibri}
+
+\title{Tracie Report}
+\author{Team 22 \thanks{Members: Mitchell Kember, Do Gyun Kim, Charles Bai, Xiao-Yang (Michael) Min, Min Suk Kim, Renato Zveibil, Leong Si}}
+\date{\today}
+
+\setlength{\parindent}{0pt}	% No indentation for all paragraphs
+\setlength{\parskip}{1em}	% Distance between paragraphs
+\setstretch{1.5}		% Line spacing
+
+\renewcommand*\contentsname{Table of Contents} % Change the name of the table of content to "Table of Contents" (Don't ask why it's not default...)
+\renewcommand{\cftsecleader}{\cftdotfill{\cftdotsep}} % Dots connect the section to the page number in the table of content
+
+\captionsetup{belowskip=4pt} % Space below caption
+
+\setlist[description]{labelindent=0.5cm} % Indent the items in description environment by 0.5cm
+
+% Redefine color for Gantt Chart
+\definecolor{barblue}{RGB}{153,204,254}
+\definecolor{groupblue}{RGB}{51,102,254}
+\definecolor{linkred}{RGB}{165,0,33}
+\setganttlinklabel{f-s}{} % Gantt Chart stuff
+
+\begin{document}
+
+	\begin{titlepage}
+		\maketitle
+		\thispagestyle{empty}	% Remove page number for this page
+	\end{titlepage}
+
+	\setcounter{page}{2}	% Set the page counter to 2 (LaTeX does not count title page in the page count)
+
+	\tableofcontents	% Display table of content here
+
+	\section{Executive Summary}
+
+	“Tracie” utilizes the Scribbler Bot and the Fluke 2 Board to trace out the drawable input transferred from the user interface, via a web app, through linear movement and precise rotations. Programmed in JavaScript, the client, which runs in the browser, is the ultimate form of communication between the user and the robot. The client provides the user the ability to start and stop the program immediately, and allows the user to modify the data values of the Controller, which alters the distance and time conversion and rotation to time conversion for optimization purposes. The user interface, integrated within the client, allows the user to input a set of points and provides backwards and clearing functionality. 
+	When the program runs, the client communicates with the Server and Controller, both simultaneously running in the terminal, to start up the Tracie script and retrieves information influencing the robot’s performance, such as the speed. The Tracie program is coded in Python using the Myro library [1], a Python-written framework used for programming robots. The Tracie program supplies the artificial intelligence and program logic to manipulate the Scribbler Bot’s movement.\par
+	This report contains a Work Breakdown Structure (Figure ~\ref{fig:WBS}), a PERT Network\ Diagram (Figure ~\ref{fig:PERT}), and a Gantt Chart (Figure ~\ref{fig:GanttChart}). They provide a strong\ foundation in optimizing the time spent on each activity through an organized schedule. Additionally, this report includes a requirements document, which identifies the personnel in the group and their respective roles and contributions, and lists the functional and non-functional requirements in order to progress and complete the project. Furthermore, a computation decision making (CDM) section will also be included. CDM is essentially the description of how the problems in the project are being analyzed, as well as the number and description of the criteria and alternatives found. The project retrospective section will include what worked well and what did not in regards to the supplied resources, (such as the Scribbler Bot or Fluke 2 Board), team organization, and the development process.
+
+	\section{Requirements}
+
+		\subsection{Roles}
+		\begin{description}
+			\item[Mitchell Kember:] 
+				Project leader, coordinator, and organizer. Mitchell set up Trello boards [2] to keep track of progress and objectives for the project. Additionally, he set up the client and server [3][4] on which Tracie is run on and contributed the majority of the code.
+			\item[Do Gyun (Justin) Kim:]
+				User interface designer. Justin created the user interface and its functions with JavaScript.
+			\item[Charles Bai:]
+				Algorithm developer and reporter. Charles created algorithms for rotation to time conversion and distance calculations. He also wrote the Executive Summary, designed the Planning Diagrams, and worked on the Requirments part of the report.
+			\item[Xiao-Yang (Michael) Min:]
+				Manager. Michael verified when objectives should be completed in order for the project to be completed on time.
+			\item[Leong Si:]
+				Reporter and report designer. Leong was responsible for the publication of the report. He also worked on the Requirements, Computation Decision Making, Project Retrospective part of the report.
+		\end{description}
+
+		\subsection{Functional Requirements}
+		\begin{description}
+			\item[Server:]
+				A local host server which allows communication between the user interface on a computer and the Scribbler Bot.
+			\item[Controller:]
+				A program written in Python to control the robot via the server. It should be capable of controlling the robot's movement with different input values.
+			\item[Math Utility]
+				Calculations are needed to be done for the robot to move in the correct speed, angle, and distance. Those calculations will be used to implement the movement algorithm once the calculations satisfy the expected result.
+			\item[Movement Algorithm]
+				Using Math Utility, the algorithm should translate the desired shapes or drawings into a sequence of robot movements.
+			\item[User Interface]
+				The user interface should allow the user to select or create drawings within itself.
+			\item[Graphical Design]
+				The layout of the cilent, which contains the Controller and user interface, should be clean and readable. It should display the current status of the robot, allow the user to change values of the Controller, and have buttons for functions like reset or stop. 
+		\end{description}
+
+		\subsection{Non-functional Requirements}
+		\begin{description}
+			\item[Constraints] \hfill
+			\begin{description}
+				\vspace{-2mm}	% Reduce vertical space by 2mm
+				\item[Time] \hfill \\
+					The project must be finished by November 20$\mathrm{^{th}}$.
+				\item[Money] \hfill \\
+					The team would not receive any payment during or upon finishing the project. Also, the team did not plan to spend extra money on this project, so resources were limited.
+				\item[DC Motor] \hfill \\
+					The DC motor of the Scribbler Bot made it very difficult to do fluent movement, especially turning. Since the Scribbler Bot was the only robot allowed, many more calculations and considerations were required.
+				\item[Bluetooth] \hfill \\
+					The range of the bluetooth device in the Fluke 2 Board was limited. It also had a noticeable delay when performing real-time tasks. Different \\methods were going to be used to bypass these problems, for example, a web client to extend the range.
+			\end{description}
+		\item[Criteria] \hfill \\
+			\textbf{\textperiodcentered \ Accuracy of the shapes} \\
+			\textbf{\textperiodcentered \ Time required to trace} \\
+			\textbf{\textperiodcentered \ Feasibility} \\
+			\textbf{\textperiodcentered \ Flexibility}
+			\par
+			Details of the criteria will be discussed on the Computation Decision Making section.
+		\end{description}
+
+	\newpage
+	\section{Diagrams}
+
+	\begin{figure}[!ht] 
+		\centering		% Center figure
+		\hspace*{-1cm}	% Reduce horizontal space by 1cm
+		\includegraphics[scale=0.55]{Tracie_WBS.png} % Created with Mindview
+		\caption{Work Breakdown Structure of Tracie}
+		\label{fig:WBS}
+	\end{figure}
+	
+	\begin{figure}[!ht]
+		\centering
+		\hspace*{-1cm}	% Reduce horizontal space by 1cm
+		\includegraphics[scale = 0.8]{PERT_diagram.png} % Created with MS Paint
+		\caption{PERT diagram. Critical paths: \{B,C,H,G\}, \{B,C,I\}.}
+		\label{fig:PERT}
+	\end{figure}
+	%
+	% Based on the example in http://mirror.math.ku.edu/tex-archive/graphics/pgf/contrib/pgfgantt/pgfgantt.pdf , page 48
+	%
+	\begin{figure}[!ht]
+
+		\resizebox{\textwidth}{!}{ % resize the box (the Gantt Chart in this case) to text width
+			\begin{ganttchart}[
+		    	y unit chart =.6cm,
+		    	x unit=1cm,
+		    	canvas/.append style={fill=none, draw=black!5, line width=.75pt},
+		    	hgrid style/.style={draw=black!5, line width=.75pt},
+		    	vgrid={*1{draw=black!5, line width=.75pt}},
+		    	today=8,
+		    	today rule/.style={
+		     		draw=red,
+		      		dash pattern=on 4.5pt off 3.5pt,
+		      		line width=1.5pt
+		    	},
+		    	today label font=\small\bfseries\color{red},
+		    	title/.style={draw=none, fill=none},
+		    	title label font=\bfseries\footnotesize,
+		    	title label node/.append style={below=7pt},
+		    	include title in canvas=false,
+		    	bar height=.6,
+		    	bar label font=\mdseries\scriptsize\color{black!70},
+		    	bar label node/.append style={left=0.2cm},
+		    	bar/.append style={draw=none, fill=black!63},
+		    	bar incomplete/.append style={fill=barblue},
+		    	bar progress label font=\mdseries\tiny\color{black!70},
+		    	group incomplete/.append style={fill=groupblue},
+		    	group left shift=0,
+		    	group right shift=0,
+		    	group height=.2,
+		    	group peaks tip position=0,
+		    	group label node/.append style={left=.4cm},
+		    	group progress label font=\bfseries\footnotesize,
+		    	link/.style={-latex, line width=0.6pt, linkred},
+		    	link label font=\scriptsize\bfseries,
+		    	link label node/.append style={below left=-2pt and 0pt}
+		  		]{1}{13}
+
+		  		\gantttitle[
+		    		title label node/.append style={below left=7pt and -3pt}
+		  			]{Date: \emph{November}}{0}
+		  		\gantttitlelist{5,...,17}{1} \\
+
+		        \ganttgroup[progress=98]{Back End}{1}{9}\\
+				\ganttbar[progress=100,name=WBS1A]{\textbf{Tracie} (A)}{4}{9} \\
+				\ganttbar[progress=100,name=WBS1B]{\textbf{Server} (B)}{1}{5}\\
+				\ganttbar[progress=90,name=WBS1C]{\textbf{Template Generation} (C)}{6}{8}\\
+				\ganttbar[progress=100,name=WBS1D]{\textbf{Controller} (D)}{7}{8}\\
+
+		  		\ganttgroup[progress=50]{Movement Function}{8}{13}\\
+		  		\ganttbar[progress=100,name=WBS2A]{\textbf{Math Utility} (E)}{8}{9}\\
+		 		\ganttbar[progress=50,name=WBS2B]{\textbf{Movement Algorithm} (F)}{10}{12}\\
+		 		\ganttbar[progress=0,name=WBS2C]{\textbf{Optimization} (G)}{13}{13}\\
+
+		 		\ganttgroup[progress=5]{Front End}{9}{13} \\
+		 		\ganttbar[progress=10,name=WBS3A]{\textbf{User Interface} (H)}{9}{12} \\
+		 		\ganttbar[progress=0,name=WBS3B]{\textbf{Graphical Design} (I)}{9}{13} \\
+
+			\end{ganttchart} }
+
+		\caption{Tracie's Gantt Chart on Nov. 13, 2014 [5]}
+		\label{fig:GanttChart}
+	\end{figure}
+
+	\newpage
+	\section{Computation Decision Making}
+		
+	After reading the proposals, the team came to a conclusion that the drawing feature of the Scribbler Bot should be utilized. The original plan was to allow a user to input a drawing from a computer, then the drawing would be traced by the Scribbler Bot on a piece of paper.
+	\par
+
+	There were many criteria needed to be considered before selecting the most appropriate drawing method.
+	\vspace{-5mm}	% Reduce vertical space in between by 5mm
+	\begin{description}
+		\item[1. Accuracy] \hfill \\
+		The drawing created by the robot must follow very closely relative to the drawing on the screen. 
+		\item[2. Time] \hfill \\
+		The robot should take minimal time to trace out the drawing.
+		\item[3. Feasibility] \hfill \\
+		Some of the members in the team had little to no experience in programming, especially in Python.
+		In order to share the workload equally, the project should not be too difficult for anyone.
+		\item[4. Flexibility] \hfill \\
+		The robot should create different drawings based on the user's choice.
+	\end{description}
+
+	With the criteria listed above, 3 of the suggested methods were chosen to be computated with CDM.
+	\vspace{-5mm}	% Reduce vertical space in between by 5mm
+	\begin{description}
+		\item[1) Fixed Shapes] \hfill \\
+			Allow the user to choose a shape from the user interface.
+			After they have selected their shape, the robot will then draw it.
+		\item[2) Pixel Based] \hfill \\
+			The users will create a pixel based drawing on the user interface, then the robot will recreate the drawing on a piece of paper.
+		\item[3) Point to Point] \hfill \\
+			The user will insert “points” on the user interface. Each point is connected directly to the point placed before it. The robot will then follow the points in order, thus create a drawing.
+	\end{description}
+
+	\begin{table}[!ht]
+		\centering
+		\caption{CDM of Tracie}
+		\label{table:CDM}
+		\begin{tabular}{ c|c|c c c|c c c|c c c|}
+			\multirow{2}{*}{Criteria} & \multirow{2}{*}{w$_i$ (\%)} & \multicolumn{3}{ c|}{Fixed Shapes} & \multicolumn{3}{ c|}{Pixel Based} & \multicolumn{3}{ c|}{Point to Point} \\
+			& & C$_{i1}$ & r$_{i1}$ & S$_{i1}$ & C$_{i2}$ & r$_{i2}$ & S$_{i2}$ & C$_{i3}$ & r$_{i3}$ & S$_{i3}$ \\
+			\hline
+			Accuracy & 30 & 10.0 & 1.0 & 0.30 & 9.0 & 0.9 & 0.27 & 8.0 & 0.8 & 0.24 \\
+			Time & 10 & 10.0 & 1.0 & 0.10 & 3.0 & 0.3 & 0.03 & 7.0 & 0.7 & 0.07 \\
+			Feasibility & 30 & 10.0 & 1.0 & 0.30 & 5.0 & 0.5 & 0.15 & 9.0 & 0.9 & 0.27 \\
+			Flexibility & 30 & 1.0 & 0.1 & 0.03 & 10.0 & 1.0 & 0.30 & 9.0 & 0.9 & 0.27 \\
+			\hline
+			& & & & 0.73 & & & 0.75 & & & 0.85
+		\end{tabular}
+	\end{table}
+
+	\newpage
+	From Table 1 the results showed that the Point to Point method satisfied majority of the criteria. Therefore, it became the most suitable method of tracing for the project.
+
+	\section{Project Retrospective}
+	
+		\subsection{Resources}
+			During the production of Tracie, the team faced different kinds of problems, especially the ones involving hardware. The robot provided, the Scribbler Bot, was not equipped with well-functioning hardware. The sensoring devices of the robot could have been utilized for the project, but the team decided against it since the devices were not reliable. Instead, the most consistent parts of the robot were used, the motor and the drawing “function”.
+			\par
+			The Fluke 2 Board was also a supplied resource. Similar to the robot, the sensoring devices could not provide the accuracy needed. Also, as discussed in Section 2.3, the bluetooth connection was a major problem throughout the project.
+			\par
+			The Myro library was used in the code to access parts of the Scribbler Bot. It contained all the functions needed to control or receive information from the robot. It made coding for the project very simple. However, the only problem the team struggled with was the precision of the robot's rotation. The functions in the library allowed the robot to turn or rotate one of its wheels for a specific amount of time, but there was no function that allowed the robot to rotate a specific angle.
+			\par
+
+		\subsection{Project Organization}
+			The final product, Tracie, was consistent and accurate. The project served as a benchmark in order to learn and practise the development of software. Futhermore, the challenge of hardware constraints served as a learning experience about the practicality of software.
+			\par
+			The development process of the project went well. All the components needed to progress were finished ahead of schedule. Thanks to Mitchell, who set up the GitHub repository and the Trello boards, the group was able to clearly identify the critical path and important deadlines.
+			\par
+			Although the project went very smoothly, there were conflicts within the organization of the group. There were difficulties in managing the group schedule. The result was an unbalanced workload distribution within the team. While some of the members attended all meetings and participated in all aspects of the project, others did not contribute.
+			\par
+
+		\subsection{Solutions and Alternatives}
+			The main issue within the group was an organizational one. To resolve issues similar to this in future cases would involve setting up mandatory meetings for group members where everyone must show up and work together on the project. Also, planning a schedule at the beginning of the project can provide insight on when the meetings are, so that individuals have an adequate amount of time to adjust their schedules.
+
+
+	\newpage
+	\section{Reference}
+	[1]  Institute for Personal Robots in Education. (2013, April 24). \textit{Myro Reference Manual} [Online]. Available: \url{http://wiki.roboteducation.org/Myro_Reference_Manual}
+
+	[2] M. Kember. (2014, Oct 27). \textit{Tracie} [Online]. Available: \url{http://www.trello.com/b/iJbcFOOv/tracie#}
+
+	[3] D. Bilenko. \textit{Gevent: A coroutine-based network library for Python} [Online]. Available: \url{http://www.gevent.org}
+
+	[4] M. Hellkamp. (2014, Nov 25). \textit{Primer to Asynchronous Applications} [Online]. Available: \url{http://www.bottlepy.org/docs/dev/async.html}
+
+	[5] W. Skala. (2013, June 1). \textit{Drawing Gantt Charts in LaTeX with TikZ} [Online]. Available: \url{http://mirror.math.ku.edu/tex-archive/graphics/pgf/contrib/pgfgantt/pgfgantt.pdf}
+
+
+\end{document}

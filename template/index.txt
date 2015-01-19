@@ -1,0 +1,67 @@
+{title}
+Scribbler Bot | Team 22
+
+{content}
+<section id="controls">
+	<textarea id="console" rows="1" readonly></textarea>
+	<section id="cbuttons">
+		<section>
+			<label>Program</label>
+			<a id="btnc-avoid"
+			onclick="switchProgram('avoid');">Avoid</a>
+			<a id="btnc-tracie"
+			class="disabled-button"
+			onclick="switchProgram('tracie');">Tracie</a>
+		</section>
+		<section>
+			<label>Control</label>
+			<a id="btnc-startstop" onclick="btnStartStop();">Start</a>
+			<a id="btnc-reset" onclick="btnReset();">Reset</a>
+		</section>
+		<section>
+			<label>Other</label>
+			<a id="btnc-beep" onclick="send('other:beep')">Beep</a>
+			<a id="btnc-info" onclick="send('other:info')">Info</a>
+		</section>
+		<section>
+			<label>Console</label>
+			<a id="btnc-clear" onclick="clearConsole();">Clear</a>
+			<a id="btnc-freescroll" onclick="btnFreeScroll();">Free</a>
+		</section>
+		<section>
+			<label>Params</label>
+			<a id="btnc-help" onclick="switchToView('param-help');">Help</a>
+			<a id="btnc-calib" onclick="btnCalib();">Calib</a>
+		</section>
+		<form onsubmit="setParameter(); return false;">
+			<label>Value</label>
+			<div><input id="c-param-name" type="text"></div>
+			<div><input id="c-param-value" type="text"></div>
+			<input type="submit" style="position: absolute; height: 0px; width: 0px; border: none; padding: 0px;" hidefocus="true" tabindex="-1">
+		</form>
+	</section>
+	<a id="btnc-draw" onclick="switchToView('drawing');">Draw</a>
+</section>
+<section id="param-help">
+	<dl id="pdefinitions"></dl>
+	<a id="btnp-back" onclick="switchToView('controls');">Back</a>
+</section>
+<section id="drawing">
+	<canvas id="canvas" width="485" height="485"></canvas>
+	<section id="dbuttons">
+		<section>
+			<a id="btnd-undo" class="disabled-button" onclick="dbtnAction('undo');">Undo</a>
+			<a id="btnd-redo" class="disabled-button" onclick="dbtnAction('redo');">Redo</a>
+			<a id="btnd-clear" class="disabled-button" onclick="dbtnAction('clear');">Clear</a>
+			<a id="btnd-del" onclick="dbtnAction('del');">Del</a>
+		</section>
+		<section>
+			<a id="btnd-save" onclick="dbtnAction('save');">Save</a>
+			<a id="btnd-load" onclick="dbtnAction('load');">Load</a>
+			<a id="btnd-trace" onclick="dbtnAction('trace');">Trace</a>
+			<a id="btnd-done" onclick="switchToView('controls');">Done</a>
+		</section>
+	</section>
+</section>
+<script src="/drawing.js"></script>
+<script src="/controls.js"></script>
